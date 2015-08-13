@@ -49,9 +49,9 @@ def setup_oauth():
 
 def get_oauth():
     oauth = OAuth1(CONSUMER_KEY,
-                client_secret=CONSUMER_SECRET,
-                resource_owner_key=OAUTH_TOKEN,
-                resource_owner_secret=OAUTH_TOKEN_SECRET)
+                   client_secret=CONSUMER_SECRET,
+                   resource_owner_key=OAUTH_TOKEN,
+                   resource_owner_secret=OAUTH_TOKEN_SECRET)
     return oauth
 
 if __name__ == "__main__":
@@ -65,7 +65,8 @@ if __name__ == "__main__":
         doc = lxml.html.fromstring(urllib2.urlopen("http://govsm.com/w/House").read())
         for twitter_links in doc.xpath("//a[contains(@href, 'twitter')]"):
             twitter_handle = twitter_links.attrib['href'][20:]
-            r = requests.get(url="https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=%s" % twitter_handle, auth=oauth)
-            for stuff in r.json():
-                print stuff['text']
+            r = requests.get(url="https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=%s" %
+                             twitter_handle, auth=oauth)
+            for tweets in r.json():
+                print tweets['text']
             break
